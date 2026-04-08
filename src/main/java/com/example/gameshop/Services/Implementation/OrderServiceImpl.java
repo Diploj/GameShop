@@ -66,9 +66,9 @@ public class OrderServiceImpl implements OrderService {
 
     public List<OrderDto> findAllByUser(Long userId) {
         var entitiesList = orderRepository.findAllByUserId(userId);
-        var dtoList = new ArrayList<OrderDto>();
-        mapper.map(entitiesList,dtoList);
-        return dtoList;
+        return entitiesList.stream()
+                .map(entity -> mapper.map(entity,OrderDto.class))
+                .toList();
     }
 
     @Transactional

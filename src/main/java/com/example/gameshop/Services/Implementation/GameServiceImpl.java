@@ -36,9 +36,9 @@ public class GameServiceImpl implements GameService {
 
     public List<GameDto> findAllByName(String name) {
         var entitiesList = repository.findAllByNameContains(name);
-        var dtoList = new ArrayList<GameDto>();
-        mapper.map(entitiesList,dtoList);
-        return dtoList;
+        return entitiesList.stream()
+                .map(entity -> mapper.map(entity, GameDto.class))
+                .toList();
     }
 
     @Transactional
