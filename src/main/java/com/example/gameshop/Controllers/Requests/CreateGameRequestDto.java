@@ -1,6 +1,6 @@
 package com.example.gameshop.Controllers.Requests;
 
-public record CreateGameRequest (
+public record CreateGameRequestDto(
     String name,
     double price
 ){}

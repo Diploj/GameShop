@@ -1,88 +1,57 @@
 package com.example.gameshop.Controllers;
 
-import com.example.gameshop.Controllers.Requests.CreateOrderRequest;
-import com.example.gameshop.Data.Entities.OrderEntity;
-import com.example.gameshop.Services.Dto.OrderDto;
-import com.example.gameshop.Services.Interfaces.OrderService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.gameshop.Controllers.Requests.CreateOrderRequestDto;
+import com.example.gameshop.Controllers.Response.OrderResponseDto;
+import com.example.gameshop.Services.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/order")
 public class OrderController {
     private final OrderService service;
-    @Autowired
-    public OrderController(OrderService service) {
-        this.service = service;
-    }
     @GetMapping("findById")
-    ResponseEntity<?> findById(@RequestParam("id") Long id) {
-        try {
-            var order = service.findById(id);
-            return ResponseEntity.ok(order);
-        }
-        catch (Exception e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
-        }
+    ResponseEntity<OrderResponseDto> findById(@RequestParam("id") Long id) {
+        OrderResponseDto order = service.findById(id);
+        return ResponseEntity.ok(order);
     }
     @PostMapping("create")
-    ResponseEntity<?> create(@RequestBody CreateOrderRequest request) {
-        try {
-            var order = service.create(request.userId(), request.gameIds());
-            return ResponseEntity.ok(order);
-        }
-        catch (Exception e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
-        }
+    ResponseEntity<OrderResponseDto> create(@RequestBody CreateOrderRequestDto request) {
+        OrderResponseDto order = service.create(request.userId(), request.gameIds());
+        return ResponseEntity.ok(order);
     }
 
     @GetMapping("findAllByUser")
-    ResponseEntity<?> findAllByUser(@RequestParam("userId") Long userId) {
-        try {
-            var orders = service.findAllByUser(userId);
-            return ResponseEntity.ok(orders);
-        }
-        catch (Exception e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
-        }
+    ResponseEntity<List<OrderResponseDto>> findAllByUser(@RequestParam("userId") Long userId) {
+        List<OrderResponseDto> orders = service.findAllByUser(userId);
+        return ResponseEntity.ok(orders);
     }
 
     @PostMapping("addGameToOrder")
-    ResponseEntity<?> addGameToOrder(@RequestParam("orderId")Long orderId,@RequestParam("gameId") Long gameId) {
-        try {
-            service.addGameToOrder(orderId,gameId);
-            return ResponseEntity.ok().build();
-        }
-        catch (Exception e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
-        }
+    ResponseEntity addGameToOrder(@RequestParam("orderId")Long orderId,@RequestParam("gameId") Long gameId) {
+        service.addGameToOrder(orderId,gameId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("removeGameFromOrder")
-    ResponseEntity<?> removeGameFromOrder(@RequestParam("orderId")Long orderId,@RequestParam("gameId") Long gameId) {
-        try {
-            service.removeGameFromOrder(orderId,gameId);
-            return ResponseEntity.ok().build();
-        }
-        catch (Exception e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
-        }
+    ResponseEntity removeGameFromOrder(@RequestParam("orderId")Long orderId,@RequestParam("gameId") Long gameId) {
+        service.removeGameFromOrder(orderId,gameId);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("delete")
-    ResponseEntity<?> delete(@RequestParam("id")Long id) {
-        try {
-            service.delete(id);
-            return ResponseEntity.ok().build();
-        }
-        catch (Exception e){
-            return  ResponseEntity.badRequest().body(e.getMessage());
-        }
+    ResponseEntity delete(@RequestParam("id")Long id) {
+        service.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

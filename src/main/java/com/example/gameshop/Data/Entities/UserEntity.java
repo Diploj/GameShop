@@ -1,11 +1,21 @@
 package com.example.gameshop.Data.Entities;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -14,7 +24,7 @@ public class UserEntity {
     private Long id;
     @Column(nullable = false, unique = true, length = 50)
     private String login;
-    @Column(nullable = false,name = "password_hash",length = 255)
+    @Column(nullable = false,length = 255)
     private String passwordHash;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderEntity> orders = new ArrayList<>();

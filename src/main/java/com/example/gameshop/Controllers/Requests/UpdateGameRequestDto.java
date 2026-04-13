@@ -1,7 +1,7 @@
 package com.example.gameshop.Controllers.Requests;
 
-public record UpdateGameRequest (
-        Long id,
+public record UpdateGameRequestDto(
+        Long gameId,
         String name,
         double price
 ){}
