@@ -22,7 +22,7 @@ public class GameShopControllerAdvice {
     }
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
     @ExceptionHandler(CannotCreateTransactionException.class)
     public ResponseEntity<String> handleCannotCreateTransactionException(CannotCreateTransactionException e) {

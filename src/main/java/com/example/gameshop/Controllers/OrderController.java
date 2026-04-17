@@ -21,26 +21,26 @@ import java.util.List;
 public class OrderController {
     private final OrderService service;
     @GetMapping("findById")
-    ResponseEntity<OrderResponseDto> findById(@RequestParam("id") Long id) {
+    ResponseEntity<OrderResponseDto> findOrderById(@RequestParam("id") Long id) {
         OrderResponseDto order = service.findById(id);
         return ResponseEntity.ok(order);
     }
     @PostMapping("create")
-    ResponseEntity<OrderResponseDto> create(@RequestBody CreateOrderRequestDto request) {
+    ResponseEntity<OrderResponseDto> createOrder(@RequestBody CreateOrderRequestDto request) {
         OrderResponseDto order = service.create(request.userId(), request.gameIds());
         return ResponseEntity.ok(order);
     }
 
     @GetMapping("findAllByUser")
-    ResponseEntity<List<OrderResponseDto>> findAllByUser(@RequestParam("userId") Long userId) {
+    ResponseEntity<List<OrderResponseDto>> findAllOrdersByUser(@RequestParam("userId") Long userId) {
         List<OrderResponseDto> orders = service.findAllByUser(userId);
         return ResponseEntity.ok(orders);
     }
 
     @PostMapping("addGameToOrder")
-    ResponseEntity addGameToOrder(@RequestParam("orderId")Long orderId,@RequestParam("gameId") Long gameId) {
+    ResponseEntity<Long> addGameToOrder(@RequestParam("orderId")Long orderId,@RequestParam("gameId") Long gameId) {
         service.addGameToOrder(orderId,gameId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(orderId);
     }
 
     @PostMapping("removeGameFromOrder")
@@ -50,7 +50,7 @@ public class OrderController {
     }
 
     @PostMapping("delete")
-    ResponseEntity delete(@RequestParam("id")Long id) {
+    ResponseEntity deleteOrder(@RequestParam("id")Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

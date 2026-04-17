@@ -31,6 +31,10 @@ class GameServiceImplTest {
     private ModelMapper modelMapper;
     @InjectMocks
     private GameServiceImpl service;
+
+    private static final Long gameId = 1L;
+    private static final String name = "test1";
+    private static final double price = 1;
     @Test
     void findByIdSuccessTest() {
         Long id = 1L;
@@ -48,18 +52,14 @@ class GameServiceImplTest {
 
     @Test
     void findByIdNotFoundTest() {
-        Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.empty());
-        Exception e = assertThrows(EntityNotFoundException.class,() -> {service.findById(id);});
+        when(repository.findById(gameId)).thenReturn(Optional.empty());
+        Exception e = assertThrows(EntityNotFoundException.class,() -> {service.findById(gameId);});
         assertEquals(e.getMessage(),"Game not found");
-        verify(repository).findById(id);
+        verify(repository).findById(gameId);
     }
 
     @Test
     void updateSuccessTest() {
-        Long gameId = 1L;
-        String name = "test1";
-        double price = 1;
         UpdateGameRequestDto dto = new UpdateGameRequestDto(gameId,name, price);
         GameEntity entity = new GameEntity();
 

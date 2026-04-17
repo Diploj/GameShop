@@ -33,11 +33,12 @@ class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl service;
 
+    private static final String login = "test";
+    private static final String password = "test";
+    private static final String passwordEncoded = "hash";
+
     @Test
     void loginSuccessTest() {
-        String login = "test";
-        String password = "test";
-        String passwordEncoded = "hash";
         LoginRequest request = new LoginRequest(login,password);
         UserEntity entity = new UserEntity();
         entity.setLogin(login);
@@ -56,8 +57,6 @@ class UserServiceImplTest {
 
     @Test
     void loginNotFoundTest() {
-        String login = "test";
-        String password = "test";
         LoginRequest request = new LoginRequest(login,password);
 
         when(repository.findByLogin(login)).thenReturn(Optional.empty());
@@ -70,9 +69,6 @@ class UserServiceImplTest {
 
     @Test
     void loginWrongPasswordTest() {
-        String login = "test";
-        String password = "test";
-        String passwordEncoded = "hash";
         LoginRequest request = new LoginRequest(login,password);
         UserEntity entity = new UserEntity();
         entity.setLogin(login);
