@@ -8,6 +8,8 @@ servers:
 paths:
   /user/register:
     post:
+      tags:
+        - User
       requestBody:
         required: true
         content:
@@ -32,6 +34,8 @@ paths:
                 type: string
   /user/login:
     post:
+      tags:
+        - User
       requestBody:
         required: true
         content:
@@ -65,6 +69,8 @@ paths:
                 type: string
   /game/findById:
     get:
+      tags:
+        - Game
       parameters:
         - name: id
           in: query
@@ -92,6 +98,8 @@ paths:
                 type: string
   /game/findAllByName:
     get:
+      tags:
+        - Game
       parameters:
         - name: name
           in: query
@@ -115,6 +123,8 @@ paths:
                 type: string
   /game/create:
     post:
+      tags:
+        - Game
       requestBody:
         required: true
         content:
@@ -142,6 +152,8 @@ paths:
                 type: string
   /game/update:
     post:
+      tags:
+        - Game
       requestBody:
         required: true
         content:
@@ -172,6 +184,8 @@ paths:
                 type: string
   /game/delete:
     delete:
+      tags:
+        - Game
       parameters:
         - name: id
           in: query
@@ -197,6 +211,8 @@ paths:
                 type: string
   /order/findById:
     get:
+      tags:
+        - Order
       parameters:
         - name: id
           in: query
@@ -224,6 +240,8 @@ paths:
                 type: string
   /order/create:
     post:
+      tags:
+        - Order
       requestBody:
         required: true
         content:
@@ -257,6 +275,8 @@ paths:
                 type: string
   /order/findAllByUser:
     get:
+      tags:
+        - Order
       parameters:
         - name: userId
           in: query
@@ -287,6 +307,8 @@ paths:
                 type: string
   /order/addGameToOrder:
     post:
+      tags:
+        - Order
       parameters:
         - name: orderId
           in: query
@@ -324,6 +346,8 @@ paths:
                 type: string
   /order/removeGameFromOrder:
     post:
+      tags:
+        - Order
       parameters:
         - name: orderId
           in: query
@@ -361,6 +385,8 @@ paths:
                 type: string
   /order/delete:
     delete:
+      tags:
+        - Order
       parameters:
         - name: id
           in: query
