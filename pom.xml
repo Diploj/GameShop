@@ -16,6 +16,7 @@
         <lombok-lib.version>1.18.44</lombok-lib.version>
         <postgresql-lib.version>42.7.10</postgresql-lib.version>
         <modelmapper-lib.version>3.2.0</modelmapper-lib.version>
+        <swagger-lib.version>2.6.0</swagger-lib.version>
     </properties>
     <dependencies>
         <dependency>
@@ -62,6 +63,11 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${swagger-lib.version}</version>
         </dependency>
     </dependencies>
 

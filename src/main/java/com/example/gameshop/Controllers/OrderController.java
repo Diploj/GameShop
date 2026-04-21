@@ -5,6 +5,7 @@ import com.example.gameshop.Controllers.Response.OrderResponseDto;
 import com.example.gameshop.Services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +50,7 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     ResponseEntity deleteOrder(@RequestParam("id")Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
