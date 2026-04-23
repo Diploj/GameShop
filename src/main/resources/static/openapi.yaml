@@ -1,0 +1,519 @@
+openapi: 3.0.3
+info:
+  title: GameShop
+  description: GameShop
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8081/api'
+paths:
+  /user/register:
+    post:
+      tags:
+        - User
+      operationId: registerUser
+      description: Регистрация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Успешная регистрация
+          content: {}
+        '400':
+          description: Ошибка регистрации
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка регистрации
+          content:
+            text/plain:
+              schema:
+                type: string
+  /user/login:
+    post:
+      tags:
+        - User
+      operationId: loginUser
+      description: Аутентификация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Успешный вход
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseDto'
+        '404':
+          description: Пользователь не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Не верный пароль
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка аутентификации
+          content:
+            text/plain:
+              schema:
+                type: string
+  /game/findById:
+    get:
+      tags:
+        - Game
+      operationId: findGameById
+      description: Поиск игры по id
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Игра найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponseDto'
+        '404':
+          description: Игра не найдена
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка поиска
+          content:
+            text/plain:
+              schema:
+                type: string
+  /game/findAllByName:
+    get:
+      tags:
+        - Game
+      operationId: findGamesByName
+      description: Поиск всех игр чье название включает строку
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Игры найдены
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameResponseDto'
+        default:
+          description: Ошибка поиска
+          content:
+            text/plain:
+              schema:
+                type: string
+  /game/create:
+    post:
+      tags:
+        - Game
+      operationId: createGame
+      description: Создание игры
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGameRequestDto'
+      responses:
+        '200':
+          description: Успешное создание
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponseDto'
+        '400':
+          description: Ошибка cоздания
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка cоздания
+          content:
+            text/plain:
+              schema:
+                type: string
+  /game/update:
+    post:
+      tags:
+        - Game
+      operationId: updateGame
+      description:  Обновление игры
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGameRequestDto'
+      responses:
+        '200':
+          description: Успешное изменение
+          content: {}
+        '404':
+          description: Игра не найдена
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Ошибка изменения
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка изменения
+          content:
+            text/plain:
+              schema:
+                type: string
+  /game/delete:
+    delete:
+      tags:
+        - Game
+      operationId: deleteGame
+      description: Удаление игры
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Успешное удаление
+          content: {}
+        '400':
+          description: Ошибка удаления
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка удаления
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/findById:
+    get:
+      tags:
+        - Order
+      operationId: findOrderById
+      description: Поиск заказа по id заказа
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Заказ найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseDto'
+        '404':
+          description: Заказ не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка поиска
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/create:
+    post:
+      tags:
+        - Order
+      operationId: createOrder
+      description: Создание заказа
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequestDto'
+      responses:
+        '200':
+          description: Успешное создание
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponseDto'
+        '404':
+          description: Пользователь не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Ошибка cоздания
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка cоздания
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/findAllByUser:
+    get:
+      tags:
+        - Order
+      operationId: findOrdersByUserId
+      description: Поиск всех заказов по id пользователя
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Заказы найдены
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResponseDto'
+        '404':
+          description: Пользователь не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка поиска
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/addGameToOrder:
+    post:
+      tags:
+        - Order
+      operationId: addGameToOrder
+      description: Добавление игры к заказу
+      parameters:
+        - name: orderId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: gameId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Успешное добавление игры к заказу
+          content: {}
+        '404':
+          description: Игра или заказ не найдены
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Ошибка добавления
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка добавления
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/removeGameFromOrder:
+    post:
+      tags:
+        - Order
+      operationId: removeGameFromOrder
+      description: Удаление игры из заказа
+      parameters:
+        - name: orderId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: gameId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Успешное удаление игры из заказа
+          content: {}
+        '404':
+          description: Игра или заказ не найдены
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Ошибка удаления
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка удаления
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order/delete:
+    delete:
+      tags:
+        - Order
+      operationId: deleteOrder
+      description: Удаление заказа
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Успешное удаление
+          content: {}
+        '400':
+          description: Ошибка удаления
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: Ошибка удаления
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    AuthRequest:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+          format: password
+    CreateGameRequestDto:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+    UpdateGameRequestDto:
+      type: object
+      required:
+        - id
+        - name
+        - price
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: number
+    CreateOrderRequestDto:
+      type: object
+      required:
+        - userId
+        - gameIds
+      properties:
+        userId:
+          type: integer
+          format: int64
+        gameIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+    UserResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        login:
+          type: string
+    GameResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: number
+    OrderResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        deliveryDate:
+          type: string
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/GameResponseDto'
