@@ -10,12 +10,14 @@ paths:
     post:
       tags:
         - User
+      operationId: registerUser
+      description: Регистрация пользователя
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterRequest'
+              $ref: '#/components/schemas/AuthRequest'
       responses:
         '200':
           description: Успешная регистрация
@@ -36,12 +38,14 @@ paths:
     post:
       tags:
         - User
+      operationId: loginUser
+      description: Аутентификация пользователя
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/AuthRequest'
       responses:
         '200':
           description: Успешный вход
@@ -62,7 +66,7 @@ paths:
               schema:
                 type: string
         default:
-          description: Ошибка авторизации
+          description: Ошибка аутентификации
           content:
             text/plain:
               schema:
@@ -71,6 +75,8 @@ paths:
     get:
       tags:
         - Game
+      operationId: findGameById
+      description: Поиск игры по id
       parameters:
         - name: id
           in: query
@@ -100,6 +106,8 @@ paths:
     get:
       tags:
         - Game
+      operationId: findGamesByName
+      description: Поиск всех игр чье название включает строку
       parameters:
         - name: name
           in: query
@@ -125,6 +133,8 @@ paths:
     post:
       tags:
         - Game
+      operationId: createGame
+      description: Создание игры
       requestBody:
         required: true
         content:
@@ -154,6 +164,8 @@ paths:
     post:
       tags:
         - Game
+      operationId: updateGame
+      description:  Обновление игры
       requestBody:
         required: true
         content:
@@ -186,6 +198,8 @@ paths:
     delete:
       tags:
         - Game
+      operationId: deleteGame
+      description: Удаление игры
       parameters:
         - name: id
           in: query
@@ -213,6 +227,8 @@ paths:
     get:
       tags:
         - Order
+      operationId: findOrderById
+      description: Поиск заказа по id заказа
       parameters:
         - name: id
           in: query
@@ -242,6 +258,8 @@ paths:
     post:
       tags:
         - Order
+      operationId: createOrder
+      description: Создание заказа
       requestBody:
         required: true
         content:
@@ -277,6 +295,8 @@ paths:
     get:
       tags:
         - Order
+      operationId: findOrdersByUserId
+      description: Поиск всех заказов по id пользователя
       parameters:
         - name: userId
           in: query
@@ -309,6 +329,8 @@ paths:
     post:
       tags:
         - Order
+      operationId: addGameToOrder
+      description: Добавление игры к заказу
       parameters:
         - name: orderId
           in: query
@@ -348,6 +370,8 @@ paths:
     post:
       tags:
         - Order
+      operationId: removeGameFromOrder
+      description: Удаление игры из заказа
       parameters:
         - name: orderId
           in: query
@@ -387,6 +411,8 @@ paths:
     delete:
       tags:
         - Order
+      operationId: deleteOrder
+      description: Удаление заказа
       parameters:
         - name: id
           in: query
@@ -412,18 +438,7 @@ paths:
                 type: string
 components:
   schemas:
-    RegisterRequest:
-      type: object
-      required:
-        - login
-        - password
-      properties:
-        login:
-          type: string
-        password:
-          type: string
-          format: password
-    LoginRequest:
+    AuthRequest:
       type: object
       required:
         - login
